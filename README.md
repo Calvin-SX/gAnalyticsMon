@@ -24,6 +24,11 @@ Open the "analytics-quickstart" folder from pycharm, it will recognize the venv 
 * oauth2client
 * google-api-python-client
 
+### end vent
+```bash
+deactivate
+```
+
 
 ## Reference
 [Google Analytics API](https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py)
