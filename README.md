@@ -29,6 +29,7 @@ Open the "analytics-quickstart" folder from pycharm, it will recognize the venv 
 deactivate
 ```
 
-
+## Home page
+Refer to the [home page](https://sites.google.com/view/ganalyticsmon/home).
 ## Reference
 [Google Analytics API](https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py)
