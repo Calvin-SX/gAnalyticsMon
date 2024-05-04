@@ -23,14 +23,7 @@ source google-data/bin/activate
 ```bash
 pip install google-analytics-data
 ```
-
-### use venv in pycharm
-Open the "analytics-quickstart" folder from pycharm, it will recognize the venv automatically. But it might not be able to recognize the installed packages. Go to "Pycharm->Settings->Project Interpreter", install the following packages:
-* httplib2
-* oauth2client
-* google-api-python-client
-
-### end vent
+### end venv
 ```bash
 deactivate
 ```
