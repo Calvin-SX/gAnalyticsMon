@@ -40,3 +40,4 @@ Refer to the [home page](https://sites.google.com/view/ganalyticsmon/home).
 
 ## Contributers
 * Calvin Feng
+* Justin Feng
