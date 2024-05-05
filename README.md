@@ -19,6 +19,10 @@ python3 -m venv google-data
 ```bash
 source google-data/bin/activate
 ```
+Or on Windows
+```cmd
+google-data/Script/activate
+```
 ### install 
 ```bash
 pip install google-analytics-data
@@ -32,3 +36,6 @@ deactivate
 Refer to the [home page](https://sites.google.com/view/ganalyticsmon/home).
 ## Reference
 [Google Analytics API](https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py)
+
+
+## Contributers
