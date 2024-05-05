@@ -6,6 +6,7 @@ from google.analytics.data_v1beta.types import (
     RunReportRequest,
 )
 
+import os
 
 def sample_run_report(property_id="YOUR-GA4-PROPERTY-ID"):
     """Runs a simple report on a Google Analytics 4 property."""
@@ -30,4 +31,5 @@ def sample_run_report(property_id="YOUR-GA4-PROPERTY-ID"):
         print(row.dimension_values[0].value, row.metric_values[0].value)
 
 if __name__ == "__main__":
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     sample_run_report()
