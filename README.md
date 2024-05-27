@@ -51,6 +51,11 @@ Numpy is used to do analytics.
 GA4 API is used to retrieve data from GA4.
 
 
+## Dependencies
+Need to pip install the following packages into the virtual env:
+* numpy
+* matplotlib
+* google-analytics-data
 
 ## Contributers
 * Calvin Feng
