@@ -5,7 +5,7 @@ This project uses [Google Analytics Data API](https://developers.google.com/anal
 ### Enable API
 On the [API Quickstart page](https://developers.google.com/analytics/devguides/reporting/data/v1/quickstart-client-libraries#python), click "Enable the Google Analytics Data API v1". You might need to login to your google analytics account first. This will download a file to your Downloads folder. Note on Mac the content is base-64 encoded. Use a online base-64 decoder to decode the content and resave it as credentials.json.
 
-Open this credential.json file and find the client_email field. Go to the Google Analytics 4 property you want to access, and add this email as a new User. Grant Viewer permission to this new user.
+Open this credential.json file and find the client_email field. Go to the Google Analytics 4 property you want to access, and [add this email as a new User](https://support.google.com/analytics/answer/9305788?hl=en#zippy=%2Cin-this-article). Grant Viewer permission to this new user.
 
 ### python
 ## python venv
