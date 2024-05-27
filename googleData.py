@@ -27,8 +27,15 @@ def sample_run_report(property_id="YOUR-GA4-PROPERTY-ID"):
     response = client.run_report(request)
 
     print("Report result:")
+    ret = []
     for row in response.rows:
         print(row.dimension_values[0].value, row.metric_values[0].value)
+        data = {
+            "city": row.dimension_values[0].value,
+            "count":row.metric_values[0].value
+        }
+        ret.append(data)
+    return ret
 
 if __name__ == "__main__":
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
