@@ -57,7 +57,23 @@ Need to pip install the following packages into the virtual env:
 * matplotlib
 * google-analytics-data
 
-## Contributers
+# IP reputation check
+If suspicious traffic is detected by the above package, an email alert cab be sent to the admin. The admin can then go to WP Engine and download the log file.
+
+The log file contains the IP addresses of the visitors. We can then analyze the ip reputation of each IP Address.
+* Google Postmaster Tools
+* Sender Score by Validity
+* Talos Intelligence by Cisco
+* BrightCloud’s IP List
+* MultiRBL
+* Mail Tester
+* Cyren IP Reputation Checker
+* Smart Network Data Services (SNDS)
+
+## black list
+We can also keep a black list of ip addresses in the database.
+
+# Contributers
 * Calvin Feng
 * Justin Feng
 * Yongjian Feng
