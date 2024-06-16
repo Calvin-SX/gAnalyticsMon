@@ -19,6 +19,15 @@ class PySqlite:
     INSERT_TOTAL = "INSERT INTO total(id, total, date) VALUES(NULL, ?, ?);"
     UPDATE_TOTAL = "UPDATE total SET total=?, date=? WHERE id=1;"
     READ_TOTAL = "SELECT total, date FROM total;"
+    # blacklist website
+    CREATE_BLACKLIST_SITE_TABLE = "CREATE TABLE IF NOT EXISTS bl_webs (id INTEGER PRIMARY KEY, web STRING);"
+    BLACKLIST_GET_ALL = "SELECT web FROM bl_webs;"
+    INSERT_BLACKLIST = "INSERT INTO bl_webs(id, web) VALUES(NULL, ?);"
+
+    # urls 
+    CREATE_URL_TABLE = "CREATE TABLE IF NOT EXISTS urls (id INTEGER PRIMARY KEY, url STRING);"
+    URL_GET_ALL = "SELECT url FROM urls;"
+    INSERT_URL_TABLE = "INSERT INTO urls(id, url) VALUES(NULL, ?);"
 
     DB_FILE = "ga_data.db"
 
@@ -32,15 +41,21 @@ class PySqlite:
         # create a table
         cursor.execute(self.CREATE_TABLE)
         cursor.execute(self.CREATE_TOTAL_TABLE)
+        cursor.execute(self.CREATE_URL_TABLE)
+        cursor.execute(self.CREATE_BLACKLIST_SITE_TABLE)
+
         curtime = str(datetime.now().date())
         cursor.execute(self.INSERT_TOTAL, (0, curtime))
 
         self.conn.commit()
 
     # Daily count table
-    def add_data(self, city, count):
+    def add_data(self, city, count, date=None):
         cursor = self.conn.cursor()
-        curtime = str(datetime.now().date())
+        if date == None:
+            curtime = str(datetime.now().date())
+        else:
+            curtime = date
 
         cursor.execute(self.INSERT_DAILY_COUNT, (count, city, curtime))
         self.conn.commit()
@@ -66,6 +81,16 @@ class PySqlite:
     def close_conn(self):
         self.conn.close()
 
+    def add_bl_web(self, web):
+        cursor = self.conn.cursor()
+        cursor.execute(self.INSERT_BLACKLIST, web)
+        self.conn.commit()
+
+    def add_url(self, url):
+        cursor = self.conn.cursor()
+        cursor.execute(self.INSERT_URL_TABLE, url)
+        self.conn.commit()
+
     # TOTAL table
     def set_total(self, total):
         cursor = self.conn.cursor()
@@ -88,17 +113,66 @@ class PySqlite:
 if __name__ == '__main__':
     pysql = PySqlite()
     pysql.connect()
-    
-    pysql.add_data("Boston", 1)
-    pysql.add_data("Chicago", 2)
-    pysql.add_data("New York", 3)
-    pysql.add_data("Miami", 4)
+    bst = 1
+    chi = 2
+    ny = 3
+
+    date = "2024-05-21"
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
+    date = "2024-05-22"
+    bst += 10
+    chi += 21
+    ny += 17
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
+    date = "2024-05-23"
+    bst += 11
+    chi += 26
+    ny += 12
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
+    date = "2024-05-24"
+    bst += 31
+    chi += 20
+    ny += 19
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
+    date = "2024-05-25"
+    bst += 21
+    chi += 16
+    ny += 22
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
+    date = "2024-05-26"
+    bst += 77
+    chi += 22
+    ny += 18
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
+
+    date = "2024-05-27"
+    bst += 8
+    chi += 6
+    ny += 2
+    pysql.add_data("Boston", bst, date)
+    pysql.add_data("Chicago", chi, date)
+    pysql.add_data("New York", ny, date)
+
     rows = pysql.read_all_data()
     print(rows)
-
-    pysql.set_total(10)
-    total = pysql.read_total()
-    print(total)
 
     sum = pysql.read_daily_sum()
     print(sum)
@@ -106,3 +180,5 @@ if __name__ == '__main__':
     date = str(datetime.now().date())
     ret = pysql.read_data_for_date(date)
     print(ret)
+    pysql.add_bl_web("bl.spamcop.net")
+    pysql.add_url("http://reputation.alienvault.com/reputation.data")

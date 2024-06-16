@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script src="./js/checkgana.js"></script>
+        <script src="./js/upload.js"></script>
+        <h1>Google Analytics</h1>
+        <button onclick="checkgana();">Check today</button>
+        <p id="gana_result">No result yet</p>
+        <h1>Check IP address</h1>
+        <h2>Single IP address</h2>
+        <input placeholder="Enter ip address"><button>Check IP</button>
+        <p id="ipreputation">No result yet</p>
+        <h2>Server log file</h2>
+        <p>Download the server log file for today from WPEngine, and upload to check IP reputation.
+        </p>
+        <input type="file" name="input-file" id="input-file" onchange="upload();"/>
+        <p id="logfileresult">No result yet</p>
+    </body>
+</html>

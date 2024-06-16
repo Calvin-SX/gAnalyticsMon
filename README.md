@@ -70,8 +70,16 @@ The log file contains the IP addresses of the visitors. We can then analyze the 
 * Cyren IP Reputation Checker
 * Smart Network Data Services (SNDS)
 
-## black list
+## global black list
+### spamcop.net
+[Reference](https://www.spamcop.net/fom-serve/cache/351.html). The logic is implemented in CheckIpAddr.py.
+
+
+## local black list
 We can also keep a black list of ip addresses in the database.
+
+## Reference
+A sample [python project](https://github.com/jgamblin/isthisipbad).
 
 # Contributers
 * Calvin Feng
