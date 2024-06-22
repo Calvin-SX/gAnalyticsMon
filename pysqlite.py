@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import json
 from datetime import datetime
 
 # This is the database access file
@@ -30,6 +31,7 @@ class PySqlite:
     INSERT_URL_TABLE = "INSERT INTO urls(id, url) VALUES(NULL, ?);"
 
     DB_FILE = "ga_data.db"
+    INIT_FILE = "blacklisturl.json"
 
     def connect(self):
         self.conn = sqlite3.connect(self.DB_FILE)
@@ -48,6 +50,19 @@ class PySqlite:
         cursor.execute(self.INSERT_TOTAL, (0, curtime))
 
         self.conn.commit()
+
+
+    def import_init_data(self):
+        with open(self.INIT_FILE) as infile:
+            data = json.load(infile)
+            blacklist = data["blacklist"]
+            urls = data["url"]
+
+            for bl in blacklist:
+                self.add_bl_web(bl)
+            
+            for url in urls:
+                self.add_url(url) 
 
     # Daily count table
     def add_data(self, city, count, date=None):
@@ -78,17 +93,31 @@ class PySqlite:
         rows = cursor.fetchall()
         return rows
     
+    def read_blacklist_web(self):
+        cursor = self.conn.cursor()
+        cursor.execute(self.BLACKLIST_GET_ALL)
+        rows = cursor.fetchall()
+        ret = list(map(lambda x: x[0], rows))
+        return ret
+
+    def read_urls(self):
+        cursor = self.conn.cursor()
+        cursor.execute(self.URL_GET_ALL)
+        rows = cursor.fetchall()
+        ret = list(map(lambda x: x[0], rows))
+        return ret
+
     def close_conn(self):
         self.conn.close()
 
     def add_bl_web(self, web):
         cursor = self.conn.cursor()
-        cursor.execute(self.INSERT_BLACKLIST, web)
+        cursor.execute(self.INSERT_BLACKLIST, (web,))
         self.conn.commit()
 
     def add_url(self, url):
         cursor = self.conn.cursor()
-        cursor.execute(self.INSERT_URL_TABLE, url)
+        cursor.execute(self.INSERT_URL_TABLE, (url, ))
         self.conn.commit()
 
     # TOTAL table
@@ -112,7 +141,10 @@ class PySqlite:
 
 if __name__ == '__main__':
     pysql = PySqlite()
+    pysql.DB_FILE = "temp.db"
     pysql.connect()
+    pysql.import_init_data()
+
     bst = 1
     chi = 2
     ny = 3
@@ -180,5 +212,7 @@ if __name__ == '__main__':
     date = str(datetime.now().date())
     ret = pysql.read_data_for_date(date)
     print(ret)
-    pysql.add_bl_web("bl.spamcop.net")
-    pysql.add_url("http://reputation.alienvault.com/reputation.data")
+    blacklist_webs = pysql.read_blacklist_web()
+    print(blacklist_webs)
+    urls = pysql.read_urls()
+    print(urls)
