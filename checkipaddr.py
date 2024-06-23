@@ -30,6 +30,9 @@ class CheckIpAddr:
             ret = False
         except dns.resolver.Timeout:
             print("Timeout")
+        except Exception as e:
+            print(e)
+
 
         return ret
 

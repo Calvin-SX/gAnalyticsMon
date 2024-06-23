@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import send_from_directory
 import pysqlite
+import checkipaddr
 
 app = Flask(__name__)
 pysql = None
@@ -11,7 +12,21 @@ def onAbout():
 
 @app.route('/ipaddress/<ip>')
 def onCheckIPAddr(ip):
-    return "Good ip: " + ip
+    ret = {
+        "ip": ip,
+        "badIp": False
+    }
+    pysql.connect()
+    blwebs = pysql.read_blacklist_web()
+    pysql.close_conn()
+    cia = checkipaddr.CheckIpAddr()
+    for web in blwebs:
+        bInList = cia.checkIPinBlackList(ip, web)
+        if bInList:
+            ret['badIp'] = True
+            return ret, 200
+
+    return ret, 200
 
 @app.route('/blacklistwebs')
 def onBlacklistWebs():
