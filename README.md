@@ -56,6 +56,8 @@ Need to pip install the following packages into the virtual env:
 * numpy
 * matplotlib
 * google-analytics-data
+* flask
+* dnspython
 
 # IP reputation check
 If suspicious traffic is detected by the above package, an email alert cab be sent to the admin. The admin can then go to WP Engine and download the log file.
@@ -80,6 +82,15 @@ We can also keep a black list of ip addresses in the database.
 
 ## Reference
 A sample [python project](https://github.com/jgamblin/isthisipbad).
+
+
+## Front-end
+Use [chart.js](https://www.w3schools.com/js/js_graphics_chartjs.asp) to draw
+
+
+### navigation bar
+Use [CSS Nav bar](https://www.w3schools.com/Css/tryit.asp?filename=trycss_navbar_horizontal_black_active).
+
 
 # Contributers
 * Calvin Feng

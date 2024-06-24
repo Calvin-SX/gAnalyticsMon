@@ -2,6 +2,7 @@ from flask import Flask
 from flask import send_from_directory
 import pysqlite
 import checkipaddr
+from datetime import datetime
 
 app = Flask(__name__)
 pysql = None
@@ -42,6 +43,26 @@ def onUrls():
     pysql.close_conn()
     return urls, 200
 
+@app.route('/daily')
+def onDaily():
+    date = str(datetime.now().date())
+    pysql.connect()
+    ret = pysql.read_data_for_date(date)
+    pysql.close_conn()
+
+    return ret, 200
+
+@app.route('/dailysum')
+def onDailySum():
+    ret = {
+        "dailysum": []
+    }
+    pysql.connect()
+    ret['dailysum'] = pysql.read_daily_sum()
+    pysql.close_conn()
+
+    return ret, 200
+
 # static content
 @app.route('/views/<path:path>')
 def onView(path):
@@ -50,8 +71,8 @@ def onView(path):
 if __name__ == '__main__':
     # init database
     pysql = pysqlite.PySqlite()
-    pysql.connect()
     # need to run only once
+    #pysql.connect()
     #pysql.import_init_data()
     #pysql.close_conn()
 
