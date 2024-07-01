@@ -1,15 +1,27 @@
 from flask import Flask
-from flask import send_from_directory
+from flask import send_from_directory, request
 import pysqlite
 import checkipaddr
 from datetime import datetime
 
+SERVER_LOG = "wpengine_serverlog.csv"
 app = Flask(__name__)
 pysql = None
 
 @app.route('/about')
 def onAbout():
     return 'Google Analytics Monitor'
+
+@app.route('/serverlog', methods=['POST'])
+def onServerLog():
+    ret = {
+        "badips":[]
+    }
+    f = request.files['file']
+    f.save(SERVER_LOG)
+
+    
+    return ret, 200
 
 @app.route('/ipaddress/<ip>')
 def onCheckIPAddr(ip):
@@ -68,6 +80,7 @@ def onDailySum():
 def onView(path):
     print("Called with " + path)
     return send_from_directory('views', path)
+
 if __name__ == '__main__':
     # init database
     pysql = pysqlite.PySqlite()
