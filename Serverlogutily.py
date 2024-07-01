@@ -5,7 +5,10 @@ def sort_logs(file):
 
 
     def filter_colons(ip):
-        return ip[:ip.index(":")]
+        if ":" in ip:
+            return ip[:ip.index(":")]
+        else:
+            return ip
 
     set1 = set()
 
@@ -17,5 +20,5 @@ def sort_logs(file):
     return list1
 
 if __name__ == "__main__":
-    data = sort_logs("bcec-logs-2024-06-08T13_14_25.csv")
+    data = sort_logs("testdata/test.csv")
     print(data)
