@@ -1,5 +1,9 @@
 import pandas as pd
 
+# It was assumed that there would only be one ip adress for each line
+# As a result of this, this would be a limitation for the code
+
+
 def sort_logs(file):
     data = pd.read_csv(file,usecols = ["CLIENT"])
 
