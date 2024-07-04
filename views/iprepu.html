@@ -27,8 +27,14 @@
     <h2>Server log file</h2>
     <p>Download the server log file for today from WPEngine, and check reputation of each IP address inside.
     </p>
-    <input type="file" name="input-file" id="input-file" onchange="upload();" />
+    <input type="file" name="input-file" id="input-file" onchange="upload(this.files[0]);" />
     <p id="logfileresult">No result yet</p>
+
+    <form action="/serverlog" method="post" enctype="multipart/form-data">
+        <lable for="file">Server Log</lable>
+        <input id="serverlog" name="file" type="file"/>
+        <button>Upload</button>
+    </form>
 </body>
 
 </html>
