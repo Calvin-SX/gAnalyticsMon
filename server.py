@@ -29,20 +29,21 @@ def onServerLog():
     pysql.close_conn()
 
     cia = checkipaddr.CheckIpAddr()
+    badip_set = set()
     for ip in ips:  
         for web in blwebs:
             bInList = cia.checkIPinBlackList(ip, web)
             if bInList:
-                ret['badips'].append(ip)
+                badip_set.add(ip)
                 break
-        for url in urls:
-            try:
-                goodIP = cia.checkIPurl(ip, url)
-                if ~goodIP:
-                    ret['badips'].append(ip)
-                    break
-            except Exception as e:
-                print(e)
+
+    for url in urls:
+        try:
+            badips = cia.checkIPsUsingUrl(ips, url)
+            badip_set.update(badips)
+        except Exception as e:
+            print(e)
+    ret['badips'] = list(badip_set)
     return ret, 200
 
 @app.route('/ipaddress/<ip>')

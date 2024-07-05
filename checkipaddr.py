@@ -36,6 +36,17 @@ class CheckIpAddr:
 
         return ret
 
+    def checkIPsUsingUrl(self, ips, url):
+        badIps = []
+        with urllib.request.urlopen(url) as f:
+            html = f.read().decode("utf-8")
+            for ipaddr in ips:
+                matches =  re.findall(ipaddr, html)
+                goodIP = len(matches) == 0
+                if ~goodIP:
+                    badIps.append(ipaddr)
+        return badIps
+
     def checkIPurl(self, ipaddr, url):
         goodIP = False
         with urllib.request.urlopen(url) as f:
