@@ -2,6 +2,8 @@ from flask import Flask
 from flask import send_from_directory, request
 import pysqlite
 import checkipaddr
+import Serverlogutily
+
 from datetime import datetime
 
 SERVER_LOG = "wpengine_serverlog.csv"
@@ -19,8 +21,28 @@ def onServerLog():
     }
     f = request.files['file']
     f.save(SERVER_LOG)
+    ips = Serverlogutily.sort_logs(SERVER_LOG)
 
-    
+    pysql.connect()
+    blwebs = pysql.read_blacklist_web()
+    urls = pysql.read_urls()
+    pysql.close_conn()
+
+    cia = checkipaddr.CheckIpAddr()
+    for ip in ips:  
+        for web in blwebs:
+            bInList = cia.checkIPinBlackList(ip, web)
+            if bInList:
+                ret['badips'].append(ip)
+                break
+        for url in urls:
+            try:
+                goodIP = cia.checkIPurl(ip, url)
+                if ~goodIP:
+                    ret['badips'].append(ip)
+                    break
+            except Exception as e:
+                print(e)
     return ret, 200
 
 @app.route('/ipaddress/<ip>')
