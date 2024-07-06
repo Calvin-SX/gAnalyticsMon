@@ -26,6 +26,11 @@ var linechart = new Chart("myChart", {
     const url = "/dailysum";
     fetch(url).then((response) => response.json()).then((jsonData) => {
         dailysum = jsonData['dailysum'];
+        document.getElementById("average").innerHTML = jsonData["average"];
+        document.getElementById("stddev").innerHTML = jsonData["stddev"];
+        document.getElementById("numCities").innerHTML = jsonData["numcities"];
+        document.getElementById("3sigma").innerHTML = 3*jsonData["stddev"];
+
         xValues = [];
         yValues = [];
 
