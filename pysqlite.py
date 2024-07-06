@@ -1,7 +1,9 @@
 import sqlite3
 import os
 import json
+import random
 from datetime import datetime
+from datetime import timedelta
 
 # This is the database access file
 
@@ -138,81 +140,101 @@ class PySqlite:
         # there shall be only one
         return total
 
+    @staticmethod
+    def simulate_data(num_days, dbname="ga_data.db"):
+        pysql = PySqlite()
+        pysql.DB_FILE = dbname
+        pysql.connect()
+        
+        today = datetime.now()
+        
+        for i in range(num_days):
+            date = today - timedelta(days = i)
+            datestr = f'{date:%Y-%m-%d}'
+            bst = random.randint(100, 120)
+            chi = random.randint(70, 90)
+            ny = random.randint(90, 100)
+            pysql.add_data("Boston", bst, datestr)
+            pysql.add_data("Chicago", chi, datestr)
+            pysql.add_data("New York", ny, datestr)
+
+        pysql.close_conn()
 
 if __name__ == '__main__':
-    pysql = PySqlite()
-    pysql.DB_FILE = "temp.db"
-    pysql.connect()
-    pysql.import_init_data()
+    PySqlite.simulate_data(10)
+    # pysql = PySqlite()
+    # pysql.DB_FILE = "temp.db"
+    # pysql.connect()
+    # pysql.import_init_data()
 
-    bst = 1
-    chi = 2
-    ny = 3
+    # bst = 1
+    # chi = 2
+    # ny = 3
 
-    date = "2024-05-21"
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-21"
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
-    date = "2024-05-22"
-    bst += 10
-    chi += 21
-    ny += 17
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-22"
+    # bst += 10
+    # chi += 21
+    # ny += 17
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
-    date = "2024-05-23"
-    bst += 11
-    chi += 26
-    ny += 12
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-23"
+    # bst += 11
+    # chi += 26
+    # ny += 12
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
-    date = "2024-05-24"
-    bst += 31
-    chi += 20
-    ny += 19
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-24"
+    # bst += 31
+    # chi += 20
+    # ny += 19
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
-    date = "2024-05-25"
-    bst += 21
-    chi += 16
-    ny += 22
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-25"
+    # bst += 21
+    # chi += 16
+    # ny += 22
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
-    date = "2024-05-26"
-    bst += 77
-    chi += 22
-    ny += 18
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-26"
+    # bst += 77
+    # chi += 22
+    # ny += 18
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
 
-    date = "2024-05-27"
-    bst += 8
-    chi += 6
-    ny += 2
-    pysql.add_data("Boston", bst, date)
-    pysql.add_data("Chicago", chi, date)
-    pysql.add_data("New York", ny, date)
+    # date = "2024-05-27"
+    # bst += 8
+    # chi += 6
+    # ny += 2
+    # pysql.add_data("Boston", bst, date)
+    # pysql.add_data("Chicago", chi, date)
+    # pysql.add_data("New York", ny, date)
 
-    rows = pysql.read_all_data()
-    print(rows)
+    # rows = pysql.read_all_data()
+    # print(rows)
 
-    sum = pysql.read_daily_sum()
-    print(sum)
+    # sum = pysql.read_daily_sum()
+    # print(sum)
 
-    date = str(datetime.now().date())
-    ret = pysql.read_data_for_date(date)
-    print(ret)
-    blacklist_webs = pysql.read_blacklist_web()
-    print(blacklist_webs)
-    urls = pysql.read_urls()
-    print(urls)
+    # date = str(datetime.now().date())
+    # ret = pysql.read_data_for_date(date)
+    # print(ret)
+    # blacklist_webs = pysql.read_blacklist_web()
+    # print(blacklist_webs)
+    # urls = pysql.read_urls()
+    # print(urls)

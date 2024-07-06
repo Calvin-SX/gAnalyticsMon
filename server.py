@@ -90,7 +90,10 @@ def onDaily():
 @app.route('/dailysum')
 def onDailySum():
     ret = {
-        "dailysum": []
+        "dailysum": [],
+        "average": 30,      # bogus data
+        "stddev": 5,        # bogus data
+        "numcities": 8      # bogus data
     }
     pysql.connect()
     ret['dailysum'] = pysql.read_daily_sum()

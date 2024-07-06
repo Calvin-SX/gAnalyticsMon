@@ -4,11 +4,18 @@ table.maintable td {
 
 table.stat {
     border-collapse: collapse;
-    width: 300px;
+    width: 1200px;
 }
 
 table.stat th, td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #DDD
+}
+
+table.stat td:nth-child(odd) {
+    background-color: #f8f8f8;
+}
+table.stat th:nth-child(odd) {
+    background-color: #f8f8f8;
 }

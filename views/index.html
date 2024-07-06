@@ -21,7 +21,7 @@
 
     <h1>Google Analytics Data</h1>
     <p>Google analytics data for your WPEngine website.</p>
-    <table class="maintable" style="width:900px">
+    <table class="maintable" style="width:1200px">
         <tr>
             <td>
                 <h2>Daily visits</h2>
@@ -31,23 +31,27 @@
                 <p id="gana_result">No result yet</p>
             </td>
             <td>
-                <h2>Statistics</h2>
-                <table class="stat">
-                    <tr>
-                        <th>Average</th>
-                        <th>Standard Deviation</th>
-                    </tr>
-                    <tr>
-                        <td id="average">0</td>
-                        <td id="stddev">0</td>
-                    </tr>
-                </table>
-                <h2>Machine learning</h2>
+                <h2>Users by cities</h2>
+                <canvas id="pieChart" style="width:100%;max-width:600px"></canvas>
             </td>
         </tr>
     </table>
-    <h2>Users by cities</h2>
-    <canvas id="pieChart" style="width:100%;max-width:600px"></canvas>
+    <h2>Statistics</h2>
+    <table class="stat">
+        <tr>
+            <th>Average</th>
+            <th>Standard Deviation</th>
+            <th>Number of Cities</th>
+            <th>threshold (3 sigmas)</th>
+        </tr>
+        <tr>
+            <td id="average">0</td>
+            <td id="stddev">0</td>
+            <td id="numCities">0</td>
+            <td id="3sigma">0</td>
+        </tr>
+    </table>
+    <h2>Machine learning</h2>
     <script src="./js/total_linechart.js"></script>
 </body>
 
