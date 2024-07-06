@@ -92,11 +92,12 @@ def onDailySum():
     ret = {
         "dailysum": [],
         "average": 30,      # bogus data
-        "stddev": 5,        # bogus data
+        "stddev": 0,        
         "numcities": 8      # bogus data
     }
     pysql.connect()
     ret['dailysum'] = pysql.read_daily_sum()
+    ret['numcities'] = pysql.read_num_cities()
     pysql.close_conn()
 
     return ret, 200

@@ -17,6 +17,7 @@ class PySqlite:
     READ_DATA = "SELECT * FROM record;"
     READ_DAILY_TOTAL = "SELECT date, SUM(dailycount) as sum FROM record GROUP BY date;"
     READ_RECORD_FOR_DATE = "SELECT * FROM record WHERE date=?;"
+    READ_NUM_CITIES = "SELECT COUNT(DISTINCT country) FROM record;"
     # TOTAL is not used
     CREATE_TOTAL_TABLE = "CREATE TABLE IF NOT EXISTS total (id INTEGER PRIMARY KEY, total INTEGER, date DATETIME);"
     INSERT_TOTAL = "INSERT INTO total(id, total, date) VALUES(NULL, ?, ?);"
@@ -89,6 +90,16 @@ class PySqlite:
         rows = cursor.fetchall()
         return rows
     
+    def read_num_cities(self):
+        num_cities = 0
+        cursor = self.conn.cursor()
+        cursor.execute(self.READ_NUM_CITIES)
+        rows = cursor.fetchall()
+        for row in rows:
+            num_cities = row[0]
+        
+        return num_cities
+
     def read_data_for_date(self, date):
         cursor = self.conn.cursor()
         cursor.execute(self.READ_RECORD_FOR_DATE, (date,))
